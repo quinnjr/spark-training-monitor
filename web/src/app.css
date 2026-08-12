@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+/*
+ * Instrument-panel theme for the spark fleet dashboard.
+ * Dark graphite panels, amber LED language borrowed from rack hardware,
+ * phosphor teal for data marks. Committed dark-only design.
+ */
+@theme {
+  --color-bay: #0c1017; /* room the rack sits in */
+  --color-panel: #151b26; /* faceplate */
+  --color-panel-edge: #232c3b; /* machined bevel */
+  --color-inset: #0e131d; /* recessed meter wells */
+  --color-ink: #e6ecf5;
+  --color-ink-muted: #8b96a9;
+  --color-ink-faint: #5b6577;
+  --color-lamp: #ffb224; /* amber nameplate / LED accent */
+  --color-data: #35c9b4; /* phosphor teal, all meter fills */
+  --color-good: #4ade80;
+  --color-warn: #fbbf24;
+  --color-crit: #f87171;
+
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: var(--color-bay);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* faint vertical rack-rail striping */
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 79px,
+    rgb(255 255 255 / 0.015) 79px,
+    rgb(255 255 255 / 0.015) 80px
+  );
+}
+
+@keyframes lamp-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 6px 1px rgb(74 222 128 / 0.55);
+  }
+  50% {
+    box-shadow: 0 0 12px 3px rgb(74 222 128 / 0.85);
+  }
+}
+
+.lamp-on {
+  animation: lamp-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lamp-on {
+    animation: none;
+    box-shadow: 0 0 8px 2px rgb(74 222 128 / 0.7);
+  }
+}
